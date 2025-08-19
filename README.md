@@ -1,85 +1,89 @@
-# CAN_PROTOCOL_PROJECT
-# 🚗 Real-Time Vehicle Monitoring System using CAN
+# 🛠️ Intelligent Vehicle CAN Network System
 
-This project demonstrates a **practical implementation of a distributed embedded system** using the **CAN protocol**.  
-The system consists of **three interconnected Nodes**, each responsible for a specific task such as **motion detection, turn indication, and fuel monitoring**.  
-All nodes communicate through the **CAN bus** in real-time.
+This project presents an **embedded vehicle communication system** built using the **CAN (Controller Area Network) protocol**.  
+The architecture involves **three specialized microcontroller-based nodes**, each dedicated to handling **vehicle motion sensing, fuel monitoring, and turn signaling**. These nodes operate collaboratively over a **real-time CAN network**.
 
 ---
 
-## 📖 System Overview
-The project is built on the **LPC2129 (ARM7 MCU)** where multiple peripherals (sensors, display, LEDs) are distributed across three nodes.  
-The CAN bus ensures reliable and synchronized communication among them.
+## 🔍 Project Overview
+
+Utilizing the **LPC2129 ARM7 microcontroller**, the system demonstrates an efficient way to manage multiple peripherals distributed across different nodes.  
+The CAN bus enables **robust and synchronized communication**, ensuring reliable data transfer between all modules in real-time.
 
 ---
 
-## 🔑 Node Architecture
+## 🧩 Node Descriptions
 
-### 🖥️ Node-1: Main Controller Node
-- **Connected Devices:**
-  - MMA7660 3-axis Accelerometer (via I²C)
-  - 16x2 LCD Display
-- **Practical Role:**
-  - Continuously reads tilt/motion data from the accelerometer  
-  - Detects **left** or **right** motion (like simulating steering)  
-  - Sends turning information to Indicator Node over CAN  
-  - Receives real-time fuel level data from the Fuel Node  
-  - Displays **Fuel Level + Turn Status** on the 16x2 LCD  
-  - Works as the **central dashboard node**
-
----
-
-### 💡 Node-2: Indicator Node
-- **Connected Devices:**
-  - 7 Active-Low LEDs (arranged in a line simulating vehicle indicators)
-- **Practical Role:**
-  - Receives turn commands (left or right) from Main Controller Node  
-  - Displays dynamic LED **shifting patterns** depending on turn direction:  
-    - ⬅️ **Left Turn:** LEDs light up sequentially from **left → right**  
-    - ➡️ **Right Turn:** LEDs light up sequentially from **right → left**
+### 🧠 Node A: Control & Display Unit
+- **Peripherals Connected:**
+  - 3-Axis Accelerometer (MMA7660 via I²C)
+  - 20x4 Alphanumeric LCD
+- **Functions:**
+  - Detects directional tilt using accelerometer input  
+  - Determines **left or right turn movement** (mimics steering)  
+  - Sends directional commands to the Indicator Node via CAN  
+  - Displays live **fuel percentage and turning status** on the LCD  
+  - Acts as the **central decision and display unit**
 
 ---
 
-### ⛽ Node-3: Fuel Monitoring Node
-- **Connected Devices:**
-  - Analog Fuel Gauge connected to ADC input
-- **Practical Role:**
-  - Continuously reads the fuel level via ADC  
-  - Converts analog values into percentage format  
-  - Transmits the current fuel level to the Main Node over CAN  
-  - Ensures **real-time fuel data availability**
+### 🔁 Node B: Indicator Control Module
+- **Peripherals Connected:**
+  - 7 Active-Low LEDs configured in a linear array
+- **Functions:**
+  - Listens for turn instructions from the Control Node  
+  - Activates animated LED sequences for turn indication:  
+    - **Left Turn:** Lights shift from **left to right**  
+    - **Right Turn:** Lights shift from **right to left**
 
 ---
 
-## 📡 Communication Protocols
-- **CAN Bus (2.0A):** For real-time data exchange between all nodes  
-- **I²C Protocol:** To read accelerometer values (Node-1)  
-- **ADC Interface:** To acquire analog fuel gauge values (Node-3)  
+### ⛽ Node C: Fuel Sensing Module
+- **Peripherals Connected:**
+  - Analog fuel level sensor (connected via ADC)
+- **Functions:**
+  - Continuously reads fuel level through ADC  
+  - Converts analog values into fuel percentage  
+  - Broadcasts fuel data to the Control Node over CAN bus  
+  - Keeps the system updated with **live fuel status**
 
 ---
 
-## ⚙️ Practical Features
-✔️ Real-time motion detection using accelerometer  
-✔️ Centralized LCD display of **fuel % and turn status**  
-✔️ Dynamic **indicator LED patterns** controlled over CAN  
-✔️ Distributed multi-node communication architecture  
-✔️ Hardware-tested on **LPC2129 with real sensors & peripherals**
+## 🔗 Communication & Interfaces
+
+- **CAN Bus (Standard 2.0A):** Primary communication backbone among all nodes  
+- **I²C Bus:** Used to fetch motion data from the accelerometer in Node A  
+- **ADC Input:** For analog fuel level detection in Node C  
 
 ---
 
-## 🛠️ Hardware & Tools Used
-- **Microcontroller:** LPC2129 (ARM7-based MCU)  
-- **Sensor:** MMA7660 3-axis Accelerometer (I²C)  
-- **Display:** 16x2 LCD (used as dashboard)  
-- **Indicators:** 7 Active-Low LEDs (shift pattern controlled)  
-- **Fuel Gauge:** ADC-based analog sensor  
-- **Communication:** CAN Bus 2.0A  
-- **Development Tools:** Keil µVision, Flash Magic, Proteus (simulation & debugging)
+## ✅ Key Features
+
+- 🔄 Real-time detection of motion using accelerometer  
+- 📺 Live display of fuel and turn status on LCD  
+- 🚨 Directional LED animation for turn indicators  
+- 🧠 Decentralized control through distributed node architecture  
+- ⚙️ Hardware-level implementation using real sensors on LPC2129 MCU
 
 ---
 
-## 🚀 Real-World Applications
-- Vehicle dashboards for **Fuel + Indicators**  
-- CAN-based distributed embedded systems learning  
-- Automotive ECU/Node prototyping and testing  
-- Sensor-actuator communication projects  
+## 🧰 Hardware & Tools
+
+| Component          | Description                                |
+|--------------------|--------------------------------------------|
+| **MCU**            | LPC2129 (ARM7-based architecture)          |
+| **Accelerometer**  | MMA7660, I²C interface                     |
+| **Display**        | 20x4 LCD (connected to Node A)             |
+| **Indicators**     | 7 Active-Low LEDs (controlled in Node B)   |
+| **Fuel Sensor**    | Analog input, read via ADC (Node C)        |
+| **Protocols**      | CAN 2.0A, I²C, ADC                          |
+| **Software Tools** | Keil µVision, Flash Magic, Proteus         |
+
+---
+
+## 🌍 Potential Applications
+
+- Smart vehicle dashboards displaying dynamic info  
+- CAN-based node communication learning modules  
+- Automotive control unit simulations and prototypes  
+- Embedded sensor-actuator communication projects
