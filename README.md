@@ -1,4 +1,4 @@
-# 🛠️ Intelligent Vehicle CAN Network System
+# 🛠️ Real-Time Vehicle Monitoring System using CAN
 
 This project presents an **embedded vehicle communication system** built using the **CAN (Controller Area Network) protocol**.  
 The architecture involves **three specialized microcontroller-based nodes**, each dedicated to handling **vehicle motion sensing, fuel monitoring, and turn signaling**. These nodes operate collaboratively over a **real-time CAN network**.
