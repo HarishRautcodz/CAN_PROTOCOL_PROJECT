@@ -85,27 +85,32 @@ The CAN bus ensures reliable and synchronized communication among them.
 - Sensor-actuator communication projects  
 
 ---
-          ┌─────────────────────────┐
-          │   Node-1: Main Node      │
-          │ (Accelerometer + LCD)    │
-          └───────────┬─────────────┘
-                      │
-   ┌──────────────────┼───────────────────┐
-   │                                      │
-┌──────▼───────┐ ┌─────▼───────┐
-│ Node-2 │ │ Node-3 │
-│ Indicator │ │ Fuel Node │
-│ (7 LEDs) │ │ (ADC Sensor) │
-└──────┬───────┘ └──────┬───────┘
-│ │
-│ CAN Messages │ Fuel Data
-│ (Turn Left / Right) │ (Analog → % over CAN)
-│ │
-└─────────────────────────────────────┘
-│
-▼
-┌─────────────────────────┐
-│ LCD Display (16x2) │
-│ → Shows Fuel & Turn Info│
-└─────────────────────────┘
+flowchart LR
+
+    %% Main Node
+    subgraph ECU1[Main Node]
+        A1[MMA7660 Accelerometer<br>(I²C)]
+        A2[LCD Display]
+    end
+
+    %% Indicator Node
+    subgraph ECU2[Indicator Node]
+        B1[7 Active-Low LEDs]
+    end
+
+    %% Fuel Node
+    subgraph ECU3[Fuel Node]
+        C1[Fuel Gauge Sensor<br>(ADC)]
+    end
+
+    %% Connections
+    A1 --> ECU1
+    ECU1 --> A2
+
+    ECU1 -- Left/Right Interrupts (CAN) --> ECU2
+    ECU2 --> B1
+
+    ECU3 -- Fuel Data (CAN) --> ECU1
+    C1 --> ECU3
+
 
